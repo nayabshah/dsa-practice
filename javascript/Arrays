@@ -1,3 +1,5 @@
+// Online Javascript Editor for free
+// Write, Edit and Run your Javascript code using JS Online Compiler
 class MyArray {
     constructor(size) {
         this.length = 0;
@@ -33,7 +35,7 @@ class MyArray {
         }
     }
     swap(x,y){
-      temp = this.A[x]
+      let temp = this.A[x]
       this.A[x]=this.A[y]
       this.A[y] = temp
     }
@@ -68,6 +70,84 @@ class MyArray {
       }
       return -1
     }
+  get(idx){
+    if(idx>=0 && idx<this.length){
+      return this.A[idx]
+    }
+    return -1
+  }
+  set(idx,value){
+    if(idx>=0 && idx<this.length){
+      this.A[idx] = value
+    }
+  }
+  max(){
+    let mx = this.A[0]
+    for(let i=1;i<this.length;i++){
+      if(this.A[i]>mx){
+        mx=this.A[i]
+      }
+    }
+    return mx
+  }
+  min(){
+    let mn = this.A[0]
+    for(let i=1;i<this.length;i++){
+      if(this.A[i]<mn){
+        mn=this.A[i]
+      }
+    }
+    return mn
+  }
+  sum(){
+    let sm=0
+    for(let i=0;i<this.length;i++){
+      sm+=this.A[i]
+    }
+    return sm
+  }
+  avg(){
+    
+    return Math.floor(this.sum()/(this.length))
+  }
+  reverse(){
+    let l=0
+    let r = this.length-1
+    while(l<=r){
+      this.swap(l,r)
+      l++
+      r--
+    }
+  }
+  isSorted(){
+    for(let i=0;i<this.length-2;i++){
+      if(this.A[i]>this.A[i+1]){
+        return false
+      }
+    }
+    return true
+  }
+  insertedSorted(value){
+    if(this.isSorted()){
+      let i = this.length-1
+      while(this.A[i] > value){
+        swap(i+1,i)
+        i--
+      }
+      this.A[i+1] = value
+      this.length++
+    }
+  }
+  // rSum(A,n){
+  //   if(n<0){
+  //     return 0
+  //   }else{
+  //     return this.rSum(A,n-1)+A[n]
+  //   }
+  // }
+  // sum(){
+  //   return rSum(this.A,this.length-1)
+  // }
 }
 
 let arr = new MyArray(10);
@@ -80,6 +160,7 @@ arr.append(50);
 
 
 arr.insert(2, 25);
-
-
-console.log(arr.binSearch(40))
+// arr.set(2,100)
+arr.insertedSorted(700)
+// arr.reverse()
+arr.display()
