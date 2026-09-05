@@ -1,0 +1,85 @@
+class MyArray {
+    constructor(size) {
+        this.length = 0;
+        this.size = size;
+        this.A = new Array(size);
+    }
+
+    append(value) {
+        if (this.length < this.size) {
+            this.A[this.length] = value;
+            this.length++;
+        }
+    }
+
+    insert(idx, value) {
+        if (idx >= 0 && idx <= this.length && this.length < this.size) {
+            for (let i = this.length; i > idx; i--) {
+                this.A[i] = this.A[i - 1];
+            }
+
+            this.A[idx] = value;
+            this.length++;
+        }
+    }
+
+    delete(idx) {
+        if (idx >= 0 && idx < this.length) {
+            for (let i = idx; i < this.length - 1; i++) {
+                this.A[i] = this.A[i + 1];
+            }
+
+            this.length--;
+        }
+    }
+    swap(x,y){
+      temp = this.A[x]
+      this.A[x]=this.A[y]
+      this.A[y] = temp
+    }
+    search(value) {
+        for (let i = 0; i < this.length; i++) {
+            if (this.A[i] === value) {
+              this.swap(i,i-1)
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    display() {
+        for (let i = 0; i < this.length; i++) {
+            console.log(this.A[i]);
+        }
+    }
+    binSearch(key){
+      let l=0
+      let h=this.length-1
+      while(l<=h){
+        let mid = Math.floor((l+h)/2)
+        if(key === this.A[mid]){
+          return mid
+        }else if(this.A[mid] > key){
+          h=mid-1
+        }else{
+          l=mid+1
+        }
+      }
+      return -1
+    }
+}
+
+let arr = new MyArray(10);
+
+arr.append(10);
+arr.append(20);
+arr.append(30);
+arr.append(40);
+arr.append(50);
+
+
+arr.insert(2, 25);
+
+
+console.log(arr.binSearch(40))
