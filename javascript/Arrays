@@ -223,7 +223,7 @@ function interSection(arr1,arr2,m,n){
 function difference(arr1,arr2,m,n){
   let k=i=j=0
   let c = new Array(m)
-   while(i < m ){
+   while(i < m && j<n){
     if(arr1[i] === arr2[j]){
       i++
       j++
