@@ -176,13 +176,10 @@ function merge(arr1,arr2,m,n){
     }
   }  
   for(;i < m;i++){
-    c[k] = arr1[i]
-    k++
-   
+    c[k++] = arr1[i]
   }
    for(;j < n;j++){
-    c[k] = arr2[j]
-     k++
+    c[k++] = arr2[j]
   }
   return c
 }
