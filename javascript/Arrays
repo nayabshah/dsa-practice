@@ -1,14 +1,15 @@
 class MyArray {
     constructor(size) {
-        this.length = 0;
-        this.size = size;
-        this.A = new Array(size);
+       this.length = 0;
+      this.size = size;
+      this.A = new Array(size);
     }
 
     append(value) {
         if (this.length < this.size) {
             this.A[this.length] = value;
             this.length++;
+            return this.length
         }
     }
 
@@ -120,7 +121,7 @@ class MyArray {
     }
   }
   isSorted(){
-    for(let i=0;i<this.length-2;i++){
+    for(let i=0;i<this.length-1;i++){
       if(this.A[i]>this.A[i+1]){
         return false
       }
@@ -131,7 +132,7 @@ class MyArray {
     if(this.isSorted()){
       let i = this.length-1
       while(this.A[i] > value){
-        this.swap(i+1,i)
+        this.A[i + 1] = this.A[i];
         i--
       }
       this.A[i+1] = value
@@ -143,7 +144,7 @@ class MyArray {
     let j=this.length-1
     while(i<j){
       while(this.A[i]<0){i++}
-      while(this.A[j]>0){j--}
+      while(this.A[j]>=0){j--}
       if(i<j){
         this.swap(i,j)
       }
@@ -160,19 +161,52 @@ class MyArray {
   //   return rSum(this.A,this.length-1)
   // }
 }
-
+function merge(arr1,arr2,m,n){
+  let i=0
+  let j=0
+  let k=0
+  // console.log(m,n)
+  let c = new Array(m+n)
+  // console.log(i < arr1.length && j < arr2.length)
+  while(i < m && j < n){
+    if(arr1[i] < arr2[j]){
+      c[k++] = arr1[i++]
+    }else{
+      c[k++] =arr2[j++]
+    }
+  }  
+  for(;i < m;i++){
+    c[k] = arr1[i]
+    k++
+   
+  }
+   for(;j < n;j++){
+    c[k] = arr2[j]
+     k++
+  }
+  return c
+}
 let arr = new MyArray(10);
 
 arr.append(10);
 arr.append(20);
 arr.append(30);
-arr.append(-40);
-arr.append(-50);
+arr.append(40);
+arr.append(50);
 
+let arr2 = new MyArray(10);
 
+arr2.append(1);
+arr2.append(3);
+arr2.append(4);
+arr2.append(5);
+arr2.append(6);
+
+arr3 = merge(arr.A, arr2.A ,arr.length,arr2.length)
+console.log(arr3)
 // arr.insert(2, 25);
-arr.negativeLeft()
+// arr.negativeLeft()
 // arr.set(2,100)
 // arr.insertedSorted(700)
 // arr.reverse()
-arr.display()
+// arr.display()
