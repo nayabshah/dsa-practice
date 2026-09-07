@@ -1,6 +1,7 @@
+let arr = [8,3,6,4,6,6,8,2,7]
+
 // finding duplicate in a sorlted array
-let arr = [3,6,8,8,10,12,15,15,15,15,20]
-function findDuplicateElement(arr,n){
+function findDuplicateElementSorted(arr,n){
  let lastDuplicate = 0
   for(let i =0;i<n;i++){
     if(arr[i] === arr[i+1] && arr[i] !== lastDuplicate){
@@ -9,6 +10,7 @@ function findDuplicateElement(arr,n){
     }
   }
 }
+
 // function countDuplicateElement(arr,n){
 //   for(let i =0; i<n;i++){
 //     if(arr[i] === arr[i+1]){
@@ -20,18 +22,37 @@ function findDuplicateElement(arr,n){
 //   }
 // }
 
-
-// USING HASH TABLE
+// Duplicate count
 function countDuplicateElement(arr,n){
-  const myHash = new Array(arr[n-1]).fill(0)
+  const myHash = new Array(Math.max(...arr)+1).fill(0)
   for(let i=0;i<n;i++){
     myHash[arr[i]]++
   }
+  console.log(myHash)
   for(let j = 0;j<myHash.length;j++){
     if(myHash[j]>1){
       console.log(`${j} appeared ${myHash[j]} times`)
     }
   }
 }
+// find unsorted duplicates
+function findDuplicateElement(arr,n){
+  for(let i=0;i < n; i++){
+    if(arr[i] !== -1){
+      let j = i+1
+      let count = 1
+    while(j < n){
+      if(arr[i] === arr[j]){
+        arr[j]=-1
+        count++
+      }
+       j++
+    }
+      if(count >1){
+        console.log(`${arr[i]} appeared ${count} times`)
+      }
+    }
+  }
+}
 
-countDuplicateElement(arr,arr.length)
+findDuplicateElement(arr,arr.length)
