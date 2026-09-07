@@ -239,6 +239,10 @@ function difference(arr1,arr2,m,n){
    
   return c
 }
+function findMissingEle(sum,n){
+  let s = n*(n+1)/2
+  return s-sum
+}
 
 let arr = new MyArray(10);
 
@@ -258,11 +262,12 @@ arr2.append(30);
 arr2.append(40);
 
 
-arr3 = merge(arr.A, arr2.A ,arr.length,arr2.length)
-console.log(arr3)
+// arr3 = merge(arr.A, arr2.A ,arr.length,arr2.length)
+// console.log(arr3)
 // arr.insert(2, 25);
 // arr.negativeLeft()
 // arr.set(2,100)
 // arr.insertedSorted(700)
 // arr.reverse()
 // arr.display()
+console.log(findMissingEle(arr.sum(), arr.length+1 ))
