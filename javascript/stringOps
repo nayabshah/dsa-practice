@@ -95,4 +95,37 @@ function duplicateChar(str){
 }
 duplicateChar(str1)
 
+let str1 = 'finding'
+function duplicateChar(str){
+  const h=new Array(26).fill(0)
+  let i =0
+  for(;i<26;i++){
+    h[str.charCodeAt(i)-97]++
+  }
+  for(i=0;i<26;i++){
+    if(h[i]>1){
+    console.log(`${String.fromCharCode(i+97)} appeared ${h[i]} times`)
+    }
+  }
+}
+
+function duplicateCharUsingBytes(str){
+  const h = new Uint8Array(26);
+  for(let i=0;i<str.length;i++){
+    if(h[str.charCodeAt(i)-97] > 0){
+      console.log(`${str[i]} duplicate`)
+    }else{
+      h[str.charCodeAt(i)-97]=1
+    }
+  }
+  
+}
+let x=0b0000001
+console.log(x)
+
+x =x<<2
+console.log(x)
+// Assign a specific byte value (0-255)
+// duplicateChar(str1)
+duplicateCharUsingBytes(str1)
 console.log(isPalindrome("mam"))
