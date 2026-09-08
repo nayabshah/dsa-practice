@@ -109,23 +109,25 @@ function duplicateChar(str){
   }
 }
 
-function duplicateCharUsingBytes(str){
-  const h = new Uint8Array(26);
-  for(let i=0;i<str.length;i++){
-    if(h[str.charCodeAt(i)-97] > 0){
-      console.log(`${str[i]} duplicate`)
-    }else{
-      h[str.charCodeAt(i)-97]=1
-    }
+function isDuplicateChar(str){
+  let H = 0;
+  let x = 0;
+ for(let i = 0;i< str.length;i++){
+  x = 1;
+     x = x << (str[i].charCodeAt(0) - 'a'.charCodeAt(0));
+
+        console.log("Character:", str[i]);
+        console.log("x:", x.toString(2).padStart(32, "0"));
+        console.log("H:", H.toString(2).padStart(32, "0"));// set bit 5
+  if ((x & H) > 0) {
+      console.log("Duplicate",str[i]);
+  } else {
+      H = x | H;     // set the bit
   }
+ }
   
 }
-let x=0b0000001
-console.log(x)
-
-x =x<<2
-console.log(x)
+isDuplicateChar(str1)
 // Assign a specific byte value (0-255)
 // duplicateChar(str1)
-duplicateCharUsingBytes(str1)
 console.log(isPalindrome("mam"))
