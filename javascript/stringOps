@@ -173,6 +173,36 @@ function isAnagram(str1,str2){
   
 }
 
+function isAnagramBin(str1,str2){
+  if (str1.length !== str2.length) {
+        return false;
+  }
+  let H=0
+  let x = 0
+  count=0
+  for(let i=0;i<str1.length;i++){
+     x = 1;
+     x <<= (str1[i].charCodeAt(0) - 'a'.charCodeAt(0));
+     // console.log(x,H);
+     H = x ^ H;  
+  }
+  // console.log("H:", H.toString(2).padStart(32, "0"));
+  for(let i=0;i<str2.length;i++){
+    x = 1;
+     
+    x <<= (str2[i].charCodeAt(0) - 'a'.charCodeAt(0));
+        console.log("Character:", str2[i]);
+        console.log("x:", x.toString(2).padStart(32, "0"));
+        console.log("H:", H.toString(2).padStart(32, "0"));
+    H = x ^ H;  
+  }
+  if(H>0){
+    return false
+  }
+  return true;
+  
+}
+
 isAnagram(str1,str2)
 // isDuplicateChar(str1)
 // Assign a specific byte value (0-255)
