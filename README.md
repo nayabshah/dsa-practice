@@ -10,7 +10,7 @@ Practice repository for Data Structures and Algorithms in:
 - `cpp/` - C++ solutions
 - `python/` - Python solutions
 - `javascript/` - JavaScript solutions
-- `problems/` - Problem notes and statements
+- `java/` - Java solutions
 
 ## Suggested workflow
 
