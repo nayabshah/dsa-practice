@@ -24,7 +24,7 @@ public:
         ele = new Element[this->num];
     };
     ~Sparse() { delete[] ele; };
-    Sparse operator+(Sparse & s);
+    Sparse operator+(Sparse &s);
     friend istream & operator>>(istream &is, Sparse &s);
     friend ostream & operator<<(ostream &os, Sparse &s);
 };
