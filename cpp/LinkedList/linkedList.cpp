@@ -316,7 +316,8 @@ public:
     void reverse1()
     {
         Node *p = first;
-        int *A = new int[countNodes()];
+        int n = countNodes();
+        int *A = new int[n];
         int i = 0;
         while (p)
         {
@@ -325,26 +326,53 @@ public:
             p = p->next;
         }
 
-        while (i <= 0)
+        p = first;
+        i = n - 1;
+
+        while (p)
         {
+            p->data = A[i];
+            i--;
+            p = p->next;
         }
+
+        delete[] A;
+    }
+
+    void reverse2()
+    {
+
+        Node *p = first;
+        Node *r = NULL;
+        Node *q = NULL;
+        while (p)
+        {
+            r = q;
+            q = p;
+            p = p->next;
+            q->next = r;
+        }
+        first = q;
     }
 };
 
 int main()
 {
-    // int A[] = {10, 20, 30, 90, 50, 70, 15};
+    int A[] = {10, 20, 30, 40, 50, 60, 70};
     LinkedList list;
-    // list.create(A, 7);
-    list.insertLast(10);
-    list.insertSorted(20);
-    list.insertSorted(30);
-    list.insertSorted(90);
-    list.insertSorted(50);
-    list.insertSorted(70);
-    list.insertSorted(15);
+
+    list.create(A, 7);
+    // list.insertLast(10);
+    // list.insertSorted(20);
+    // list.insertSorted(30);
+    // list.insertSorted(90);
+    // list.insertSorted(50);
+    // list.insertSorted(70);
+    // list.insertSorted(15);
     // list.removeDuplicate();
     // cout << list.isSorted() << " ";
+    list.display();
+    list.reverse2();
     list.display();
 
     return 0;
