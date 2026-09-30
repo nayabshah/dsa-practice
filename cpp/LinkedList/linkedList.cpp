@@ -180,7 +180,7 @@ public:
         else if (indx > 0)
         {
             Node *p = first;
-            for (int i = 1; i <= (indx - 1) && p; i++)
+            for (int i = 0; i < (indx - 1) && p; i++)
             {
                 p = p->next;
             }
@@ -426,12 +426,14 @@ int main()
     LinkedList list;
 
     list.create(A, 6);
+    list.deleteNode(0);
+    list.deleteNode(5);
     // Node *t1, *t2;
     // t1 = list.first->next->next;
     // t2 = list.first->next->next->next->next->next;
     // t2->next = t1;
-    cout << list.isLoop();
-    // list.display();
+    // cout << list.isLoop();
+    list.display();
 
     return 0;
 }
