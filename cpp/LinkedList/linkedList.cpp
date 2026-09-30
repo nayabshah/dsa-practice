@@ -17,11 +17,10 @@ public:
 
 class LinkedList
 {
-private:
-    Node *first;
-    Node *last;
 
 public:
+    Node *first;
+    Node *last;
     LinkedList()
     {
         first = nullptr;
@@ -181,7 +180,7 @@ public:
         else if (indx > 0)
         {
             Node *p = first;
-            for (int i = 1; i < (indx - 1) && p; i++)
+            for (int i = 1; i <= (indx - 1) && p; i++)
             {
                 p = p->next;
             }
@@ -354,26 +353,85 @@ public:
         }
         first = q;
     }
+    void concate2(Node *second)
+    {
+        Node *p = first;
+        while (p->next)
+        {
+            p = p->next;
+        }
+        p->next = second;
+    }
+
+    void merge(Node *second) // o(m+n)
+    {
+        Node *l = NULL;
+        Node *curFirst = first;
+        if (curFirst->data < second->data)
+        {
+            l = first = curFirst;
+            curFirst = curFirst->next;
+            l->next = NULL;
+        }
+        else
+        {
+            l = first = second;
+            second = second->next;
+            l->next = NULL;
+        }
+        while (curFirst->next && second->next)
+        {
+            if (curFirst->data < second->data)
+            {
+                l->next = curFirst;
+                l = curFirst;
+                curFirst = curFirst->next;
+                l->next = NULL;
+            }
+            else
+            {
+                l->next = second;
+                l = second;
+                second = second->next;
+                l->next = NULL;
+            }
+        }
+        if (curFirst)
+        {
+            l->next = curFirst;
+        }
+        else
+        {
+            l->next = second;
+        }
+    }
+    int isLoop()
+    {
+        Node *p, *q;
+        p = q = first;
+        do
+        {
+            p = p->next;
+            q = q->next;
+            q = q ? q->next : q;
+        } while (p && q && p != q);
+        return p == q ? 1 : 0;
+    }
 };
 
 int main()
 {
-    int A[] = {10, 20, 30, 40, 50, 60, 70};
+    int A[] = {10, 20, 30, 40, 60, 75};
+    //
     LinkedList list;
 
-    list.create(A, 7);
-    // list.insertLast(10);
-    // list.insertSorted(20);
-    // list.insertSorted(30);
-    // list.insertSorted(90);
-    // list.insertSorted(50);
-    // list.insertSorted(70);
-    // list.insertSorted(15);
-    // list.removeDuplicate();
-    // cout << list.isSorted() << " ";
-    list.display();
-    list.reverse2();
-    list.display();
+    list.create(A, 6);
+    // Node *t1, *t2;
+    // t1 = list.first->next->next;
+    // t2 = list.first->next->next->next->next->next;
+    // t2->next = t1;
+    cout << list.isLoop();
+    // list.display();
 
     return 0;
 }
