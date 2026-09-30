@@ -53,6 +53,17 @@ public:
         } while (p != head);
     };
 
+    int Length()
+    {
+        int len = 0;
+        Node *p = head;
+        do
+        {
+            len+=1;
+            p = p->next;
+        } while (p != head);
+        return len;
+    }
     // void recursiveDisplay(Node* p)
     // {
     //      static int flag=0;
@@ -173,8 +184,13 @@ public:
 
     void insert(int data, int indx)
     {
+        if (indx < 0 || indx > Length())
+        {
+            return;
+        }
         Node *t = new Node(data);
         Node *p = head;
+
         if (indx == 0)
         {
             if (head == NULL)
@@ -211,6 +227,10 @@ public:
     {
         Node *p = head;
         int x = -1, i;
+        if (indx < 0 || indx > Length())
+        {
+            return -1;
+        }
         if (indx == 1)
         {
             while (p->next != head)
@@ -224,10 +244,9 @@ public:
             else
             {
 
-
                 p->next = head->next;
                 delete head;
-                head=p->next;
+                head = p->next;
             }
 
             return x;
@@ -366,6 +385,7 @@ int main()
 
     list.create(A, 6);
     list.insert(25, 2);
+
     list.deleteNode(1);
     // cout << list.isLoop();
     list.display();
