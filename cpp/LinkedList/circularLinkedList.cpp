@@ -56,6 +56,7 @@ public:
     int Length()
     {
         int len = 0;
+        if(!head) return len;
         Node *p = head;
         do
         {

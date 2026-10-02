@@ -100,7 +100,8 @@ public:
             p->next = p->prev;
             p->prev = temp;
             p = temp;
-            if (p && !p->next) first = p;
+            if (p && !p->next)
+                first = p;
 
         }
     }

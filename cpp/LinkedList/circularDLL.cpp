@@ -60,14 +60,17 @@ public:
 
     int Length()
     {
-        int len = 0;
-        Node *p = head;
-        while (p && p != head)
-        {
-            len++;
-            p = p->next;
-        }
 
+        int len = 0;
+        if(!head){
+            return len;
+        }
+        Node *p = head;
+        do
+        {
+            len += 1;
+            p = p->next;
+        } while (p != head);
         return len;
     }
 
@@ -120,6 +123,7 @@ public:
     {
         Node *p = head;
         int x = -1, i;
+
         if (indx < 0 || indx > Length())
         {
             return -1;
@@ -138,6 +142,7 @@ public:
             {
 
                 p->next = head->next;
+                p->next->prev = head->prev;
                 delete head;
                 head = p->next;
             }
@@ -156,12 +161,13 @@ public:
             if (p)
             {
                 q->next = p->next;
+                p->next->prev = q;
                 x = p->data;
                 delete p;
                 return x;
-            }
-        }
-    };
+            };
+        };
+    }
 };
 
 int main()
@@ -170,10 +176,13 @@ int main()
     //
     CircularDoublyLinkedList list;
 
+    list.insert(0, 0);
+    list.insert(10, 0);
+    list.insert(20, 0);
+    list.insert(30, 0);
 
-    // list.insert(0, 0);
-     list.create(A, 6);
-    // list.deleteNode(1);
+    // list.create(A, 6);
+    // list.deleteNode(2);
     // cout << list.isLoop();
     list.display();
 
