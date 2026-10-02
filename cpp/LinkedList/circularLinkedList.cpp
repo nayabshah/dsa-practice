@@ -59,7 +59,7 @@ public:
         Node *p = head;
         do
         {
-            len+=1;
+            len += 1;
             p = p->next;
         } while (p != head);
         return len;
@@ -204,6 +204,7 @@ public:
                 while (p->next != head)
                     p = p->next;
                 p->next = t;
+                head = t;
             }
         }
         else if (indx > 0)
