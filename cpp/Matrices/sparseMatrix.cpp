@@ -88,16 +88,16 @@ ostream & operator<<(ostream &os, Sparse &s)
 };
 int main()
 {
-    Sparse s1(5, 5, 5);
-    Sparse s2(5, 5, 5);
+    Sparse s1(5, 6, 7);
+    // Sparse s2(5, 5, 5);
     cin >> s1;
-    cin >> s2;
-    Sparse sum = s1 + s2;
+    // cin >> s2;
+    // Sparse sum = s1 + s2;
     cout << "First Matrix" << endl
          << s1;
-    cout << "Second MAtrix" << endl
-         << s2;
-    cout << "Sum Matrix" << endl
-         << sum;
+    // cout << "Second MAtrix" << endl
+    //      << s2;
+    // cout << "Sum Matrix" << endl
+    //      << sum;
     return 0;
 }
