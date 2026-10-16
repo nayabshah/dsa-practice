@@ -13,15 +13,13 @@ public:
     Queue()
     {
         size = 4;
-        front = -1;
-        rear = -1;
+        front = rear = -1;
         Q = new int[size];
     };
     Queue(int n)
     {
         this->size = n;
-        front = -1;
-        rear = -1;
+        front = rear = -1;
         Q = new int[n];
     };
     ~Queue()
@@ -31,7 +29,7 @@ public:
     // O(1)
     void enqueue(int x)
     {
-        if (rear != size - 1)
+        if (!isFull())
         {
              rear++;
             Q[rear] = x;
