@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class Queue
+class PriorityQueue
 {
 private:
     int *Q;
@@ -10,40 +10,54 @@ private:
     int rear;
 
 public:
-    Queue()
+    PriorityQueue()
     {
-        size = 6;
+        size = 4;
         front = rear = -1;
         Q = new int[size];
     };
-    Queue(int n)
+    PriorityQueue(int n)
     {
         this->size = n;
         front = rear = -1;
         Q = new int[n];
     };
-    ~Queue()
+    ~PriorityQueue()
     {
         delete[] Q;
     };
     // O(1)
-    void create(int A[], int n)
-    {
-        int i = 0;
-        for (; i < n; i++)
-        {
-            Q[i] = A[i];
-            rear = i;
-        }
-    }
-    void enqueue(int x)
+    // void enqueue(int x)
+    // {
+    //     if (!isFull())
+    //     {
+    //         rear++;
+    //         Q[rear] = x;
+    //     }
+    // }
+
+    void enqueue(int val)
     {
         if (!isFull())
         {
-            rear++;
-            Q[rear] = x;
+            if (isEmpty())
+            {
+                rear++;
+                Q[rear] = val;
+            }
+            else
+            {
+                int i = rear;
+                while(i>=0 && val > Q[i]){
+                    Q[i+1] = Q[i];
+                    i--;
+                }
+                Q[i+1] = val;
+                rear++;
+            }
         }
     }
+
     // O(1)
     int dequeue()
     {
@@ -56,6 +70,29 @@ public:
 
         return x;
     }
+
+    // O(n)
+    // int dequeue()
+    // {
+    //     int x = -1;
+    //     int maxPriority = front + 1;
+    //     int i = front + 1;
+    //     for (; i < rear; i++)
+    //     {
+    //         if (Q[i] < Q[maxPriority])
+    //         {
+    //             maxPriority = i;
+    //         }
+    //     }
+    //     x = Q[maxPriority];
+    //     i = maxPriority;
+    //     for (; i < rear; i++)
+    //     {
+    //         Q[i] = Q[i + 1];
+    //     }
+    //     rear--;
+    //     return x;
+    // }
     int isEmpty()
     {
         return front == rear;
@@ -74,88 +111,30 @@ public:
     }
     void display()
     {
-        if (rear > -1)
+        for (int i = front + 1; i <= rear; i++)
         {
-            for (int i = front + 1; i <= rear; i++)
-            {
-                cout << Q[i] << " ";
-            }
-            cout << endl;
+            cout << Q[i] << " ";
         }
-    }
-};
-
-class PriorityQueue
-{
-private:
-    Queue q1;
-    Queue q2;
-    Queue q3;
-    int size;
-
-public:
-    PriorityQueue()
-    {
-        size = 3;
-    };
-    int dequeue()
-    {
-        int x = -1;
-        if (!q1.isEmpty())
-        {
-            x = q1.dequeue();
-        }
-        else if (!q2.isEmpty())
-        {
-            x = q2.dequeue();
-        }
-        else if (!q3.isEmpty())
-        {
-            x = q3.dequeue();
-        }
-
-        return x;
-    }
-    void enqueue(int x, int priority)
-    {
-        if (priority < size && priority > -1)
-        {
-            if (priority == 0)
-            {
-                q1.enqueue(x);
-            }
-            else if (priority == 1)
-            {
-                q2.enqueue(x);
-            }
-            else
-            {
-                q3.enqueue(x);
-            }
-        }
-    }
-    void display()
-    {
-        q1.display();
-        q2.display();
-        q3.display();
+        cout << endl;
     }
 };
 
 int main()
 {
 
-    PriorityQueue q;
-    q.enqueue(20, 0);
-    q.enqueue(40, 0);
-    q.enqueue(30, 1);
-    q.enqueue(10, 2);
-    q.enqueue(50, 2);
-    q.display();
-    q.dequeue();
-    q.dequeue();
-    q.dequeue();
-    q.display();
+    PriorityQueue q(20);
 
+    q.enqueue(8);
+    q.enqueue(10);
+    q.enqueue(12);
+    q.enqueue(6);
+    q.enqueue(14);
+    q.enqueue(3);
+    q.enqueue(16);
+
+    // q.dequeue();
+    // q.dequeue();
+
+    q.display();
     return 0;
 };
