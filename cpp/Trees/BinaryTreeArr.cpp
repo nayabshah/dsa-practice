@@ -1,170 +1,241 @@
 #include <iostream>
+
 using namespace std;
 
-class CircularQueue
-{
+class Node{
+public:
+    Node* lchild;
+    int data;
+    Node* rchild;
+};
+
+class Queue{
 private:
-    int *Q;
     int size;
     int front;
     int rear;
-
+    Node** Q;  // [Node*]*: Pointer to [Pointer to Node]
 public:
-    CircularQueue()
-    {
-        size = 4;
-        front = rear = 0;
-        Q = new int[size];
-    };
-    CircularQueue(int n)
-    {
-        this->size = n;
-        front = rear = 0;
-        Q = new int[n];
-    };
-    ~CircularQueue()
-    {
-        delete[] Q;
-    };
-    // O(1)
-    void enqueue(int x)
-    {
-        if (!isFull())
-        {
-            rear = (rear + 1) % size;
-            Q[rear] = x;
-        }
-    }
-    // O(1)
-    int dequeue()
-    {
-        int x = -1;
-        if (!isEmpty())
-        {
-            front = (front + 1) % size;
-            x = Q[front + 1];
-        }
-
-        return x;
-    }
-    int isEmpty()
-    {
-        return front == rear;
-    }
-    int isFull()
-    {
-        return (rear + 1) % size == front;
-    }
-    int first()
-    {
-        return Q[front + 1];
-    }
-    int last()
-    {
-        return Q[rear];
-    }
-    void display()
-    {
-        int i = front + 1;
-        do
-        {
-            cout << Q[i] << " ";
-            i = (i + 1) % size;
-        } while (i != (rear + 1) % size);
-        cout << endl;
-    }
-};
-int *A;
-class BinaryTreeArr{
-    int root;
-
-
-public:
-
-    BinaryTreeArr(){
-        root = -1;
-        A=new int[7];
-    };
-    BinaryTreeArr(int n){
-        root =-1;
-        A=new int[n];
-
-    };
-
-    void CreateTree(int n)
-    {
-        int p;
-        int x;
-        CircularQueue q(n);
-        printf("Enter root value ");
-        scanf("%d", &x);
-        root = x;
-        A[0] =root;
-        q.enqueue(0);
-
-         while (!q.isEmpty())
-        {
-            p = q.dequeue();
-            printf("enter left child of %d ", A[p]);
-            scanf("%d", &x);
-            if (x != -1 && 2*p+1 <n)
-            {
-                A[2*p+1] = x;
-                q.enqueue(2*p+1);
-            }
-            printf("enter right child of %d ", A[p]);
-            scanf("%d", &x);
-            if (x != -1 && 2*p+2 <n)
-            {
-                A[2*p+2] = x;
-                q.enqueue(2*p+2);
-            }
-        }
-
-    };
-
-    void Preorder(int i);
-    void Inorder(int i);
-    void Postorder(int i);
+    Queue(int size);
+    ~Queue();
+    bool isFull();
+    bool isEmpty();
+    void enqueue(Node* x);
+    Node* dequeue();
 };
 
-void BinaryTreeArr::Inorder(int i)
-{
-    if (A[i])
-    {
-        Inorder(2*i+1);
-        printf(" %d ", A[i]);
-        Inorder(2*i+2);
-    }
-}
-void BinaryTreeArr::Preorder(int i)
-{
-    if (A[i])
-    {
-        printf(" %d ", A[i]);
-        Preorder(2*i+1);
-        Preorder(2*i+2);
-    }
-}
-void BinaryTreeArr::Postorder(int i)
-{
-    if (A[i])
-    {
-        Postorder(2*i+1);
-        Postorder(2*i+2);
-        printf(" %d ", A[i]);
-
-    }
+Queue::Queue(int size) {
+    this->size = size;
+    front = -1;
+    rear = -1;
+    Q = new Node* [size];
 }
 
-int main()
-{
-    BinaryTreeArr bt;
-    bt.CreateTree(8);
-    printf("\nPre Order");
+Queue::~Queue() {
+    delete [] Q;
+}
 
-    bt.Preorder(0);
-    printf("\nPost Order");
-    bt.Postorder(0);
-    return 0;
+bool Queue::isEmpty() {
+    if (front == rear){
+        return true;
+    }
+    return false;
+}
+
+bool Queue::isFull() {
+    if (rear == size-1){
+        return true;
+    }
+    return false;
+}
+
+void Queue::enqueue(Node* x) {
+    if (isFull()){
+        cout << "Queue Overflow" << endl;
+    } else {
+        rear++;
+        Q[rear] = x;
+    }
+}
+
+Node* Queue::dequeue() {
+    Node* x = nullptr;
+    if (isEmpty()){
+        cout << "Queue Underflow" << endl;
+    } else {
+        front++;
+        x = Q[front];
+    }
+    return x;
+}
+
+
+class Tree{
+private:
+    Node* root;
+public:
+    Tree() { root = nullptr; }
+    ~Tree();
+    void CreateTree();
+    void Preorder(){ Preorder(root); }  // Passing Private Parameter in Constructor
+    void Preorder(Node* p);
+    void Postorder(){ Postorder(root); }  // Passing Private Parameter in Constructor
+    void Postorder(Node* p);
+    void Inorder(){ Inorder(root); }
+    void Inorder(Node* p);
+    void Levelorder(){ Levelorder(root); }  // Passing Private Parameter in Constructor
+    void Levelorder(Node* p);
+    int Height(){ return Height(root); }  // Passing Private Parameter in Constructor
+    int Height(Node* p);
+    Node* getRoot(){ return root; }
+};
+
+void Tree::CreateTree() {
+    Node* p;
+    Node* t;
+    int x;
+
+    Queue q(25);
+    root = new Node;
+    cout << "Enter root value: " << flush;
+    cin >> x;
+    root->data = x;
+    root->lchild = nullptr;
+    root->rchild = nullptr;
+    q.enqueue(root);
+
+    while (! q.isEmpty()){
+        p = q.dequeue();
+
+        cout << "Enter left child value of " << p->data << ": " << flush;
+        cin >> x;
+        if (x != -1){
+            t = new Node;
+            t->data = x;
+            t->lchild = nullptr;
+            t->rchild = nullptr;
+            p->lchild = t;
+            q.enqueue(t);
+        }
+
+        cout << "Enter right child value of " << p->data << ": " << flush;
+        cin >> x;
+        if (x != -1){
+            t = new Node;
+            t->data = x;
+            t->lchild = nullptr;
+            t->rchild = nullptr;
+            p->rchild = t;
+            q.enqueue(t);
+        }
+    }
+}
+
+void Tree::Preorder(Node *p) {
+    if (p){
+        cout << p->data << ", " << flush;
+        Preorder(p->lchild);
+        Preorder(p->rchild);
+    }
+}
+
+void Tree::Inorder(Node *p) {
+    if (p){
+        Inorder(p->lchild);
+        cout << p->data << ", " << flush;
+        Inorder(p->rchild);
+    }
+}
+
+void Tree::Postorder(Node *p) {
+    if (p){
+        Postorder(p->lchild);
+        Postorder(p->rchild);
+        cout << p->data << ", " << flush;
+    }
+}
+
+void Tree::Levelorder(Node *p) {
+    Queue q(100);
+    cout << root->data << ", " << flush;
+    q.enqueue(root);
+
+    while (! q.isEmpty()){
+        p = q.dequeue();
+        if (p->lchild){
+            cout << p->lchild->data << ", " << flush;
+            q.enqueue(p->lchild);
+        }
+        if (p->rchild){
+            cout << p->rchild->data << ", " << flush;
+            q.enqueue(p->rchild);
+        }
+    }
+}
+
+int Tree::Height(Node *p) {
+    int l = 0;
+    int r = 0;
+    if (p == nullptr){
+        return 0;
+    }
+
+    l = Height(p->lchild);
+    r = Height(p->rchild);
+    if (l > r){
+        return l + 1;
+    } else {
+        return r + 1;
+    }
+}
+
+Tree::~Tree() {
+    // TODO
+}
+
+
+int main(){
+
+    Tree t;
+
+    t.CreateTree();
+
+    cout << "Preorder: " << flush;
+    t.Preorder(t.getRoot());
+    cout << endl;
+
+    cout << "Inorder: " << flush;
+    t.Inorder(t.getRoot());
+    cout << endl;
+
+    cout << "Postorder: " << flush;
+    t.Postorder(t.getRoot());
+    cout << endl;
+
+    cout << "Levelorder: " << flush;
+    t.Levelorder(t.getRoot());
+    cout << endl;
+
+    cout << "Height: " << t.Height(t.getRoot()) << endl;
+
+    cout << "Recursive Passing Private Parameter in Constructor" << endl;
+
+    cout << "Preorder: " << flush;
+    t.Preorder();
+    cout << endl;
+
+    cout << "Inorder: " << flush;
+    t.Inorder();
+    cout << endl;
+
+    cout << "Postorder: " << flush;
+    t.Postorder();
+    cout << endl;
+
+    cout << "Levelorder: " << flush;
+    t.Levelorder();
+    cout << endl;
+
+    cout << "Height: " << t.Height() << endl;
+
 }
