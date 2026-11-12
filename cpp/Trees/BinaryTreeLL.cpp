@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <stack>
 using namespace std;
 
 // self referential structure
@@ -92,7 +93,7 @@ public:
     {
         Node *p, *t;
         int x;
-        Queue q(100);
+        Queue q(50);
         printf("Enter root value ");
         scanf("%d", &x);
         root = new Node(x);
@@ -100,7 +101,7 @@ public:
         while (!q.isEmpty())
         {
             p = q.dequeue();
-            printf("enter left child of %d", p->data);
+            printf("enter left child of %d ", p->data);
             scanf("%d", &x);
             if (x != -1)
             {
@@ -108,7 +109,7 @@ public:
                 p->left = t;
                 q.enqueue(t);
             }
-            printf("enter right child of %d", p->data);
+            printf("enter right child of %d ", p->data);
             scanf("%d", &x);
             if (x != -1)
             {
@@ -119,50 +120,142 @@ public:
         }
     };
 
-    
     void Preorder(Node *p);
     void Inorder(Node *p);
     void Postorder(Node *p);
     void Levelorder(Node *p);
     void Height(Node *root);
 };
+
 void Binarytree::Preorder(Node *p)
 {
-    if (p)
+    stack<Node *> st;
+    while (p != NULL || !st.empty())
     {
-        printf(" %d ", p->data);
-        Preorder(p->left);
-        Preorder(p->right);
+        if (p)
+        {
+            cout << p->data << " ";
+            st.push(p);
+            p = p->left;
+        }
+        else
+        {
+            p = st.top();
+            st.pop();
+            p = p->right;
+        }
     }
 }
 
 void Binarytree::Inorder(Node *p)
 {
-    if (p)
+    stack<Node *> st;
+    while (p != NULL || !st.empty())
     {
+        if (p)
+        {
+            st.push(p);
+            p = p->left;
 
-        Inorder(p->left);
-        printf(" %d", p->data);
-        Inorder(p->right);
+        }
+        else
+        {
+
+            p = st.top();
+            st.pop();
+            cout << p->data << " ";
+            p = p->right;
+        }
     }
 }
 void Binarytree::Postorder(Node *p)
 {
-    if (p)
+    stack<long int> st;
+    long int temp;
+    while (p != NULL || !st.empty())
     {
-        Postorder(p->left);
-        Postorder(p->right);
-        printf(" %d", p->data);
+        if (p)
+        {
+            st.push((long int)p);
+            p = p->left;
+        }
+        else
+        {
+            temp = st.top();
+            st.pop();
+            if(temp > 0){
+                st.push(-temp);
+                p = ((Node*)temp)->right;
 
+            }else{
+                cout << ((Node*)-temp)->data << " ";
+                p =NULL;
+            }
+        }
     }
+}
+// void Binarytree::Preorder(Node *p)
+// {
+//     if (p)
+//     {
+//         printf(" %d ", p->data);
+//         Preorder(p->left);
+//         Preorder(p->right);
+//     }
+// }
+
+// void Binarytree::Inorder(Node *p)
+// {
+//     if (p)
+//     {
+
+//         Inorder(p->left);
+//         printf(" %d", p->data);
+//         Inorder(p->right);
+//     }
+// }
+// void Binarytree::Postorder(Node *p)
+// {
+//     if (p)
+//     {
+//         Postorder(p->left);
+//         Postorder(p->right);
+//         printf(" %d", p->data);
+
+//     }
+// }
+
+void Binarytree::Levelorder(Node *root)
+{
+   Queue q(100);
+   cout << root->data <<" ";
+   q.enqueue(root);
+   while(!q.isEmpty()){
+
+    root = q.dequeue();
+
+    if(root->left){
+        cout << root->left->data<<" ";
+        q.enqueue(root->left);
+    }
+    if(root->right){
+        cout << root->right->data<<" ";
+        q.enqueue(root->right);
+    }
+   }
 }
 
 int main()
 {
     Binarytree bt;
     bt.CreateTree();
-    bt.Preorder(root);
-    printf("\nPost Order");
-    bt.Postorder(root);
+    // cout << "\nPre Order ";
+    // bt.Preorder(root);
+    // cout << "\nIn Order ";
+    // bt.Inorder(root);
+    // cout << "\nPost Order ";
+    // bt.Postorder(root);
+    cout << "\nLevel Order ";
+    bt.Levelorder(root);
     return 0;
 }
