@@ -258,6 +258,8 @@ int Binarytree::Count(Node *p)
 int Binarytree::Hight(Node *p)
 {
     int x,y;
+    if (!root)
+        return 0;
     if (p!=NULL){
         x = Hight(p->left);
         y = Hight(p->right);
