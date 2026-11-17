@@ -243,6 +243,31 @@ void Binarytree::Levelorder(Node *root)
         q.enqueue(root->right);
     }
    }
+};
+int Binarytree::Count(Node *p)
+{
+    int x,y;
+    if (p!=NULL){
+        x = Count(p->left);
+        y = Count(p->right);
+        return x+y+1;
+    }
+    return 0;
+}
+
+int Binarytree::Hight(Node *p)
+{
+    int x,y;
+    if (p!=NULL){
+        x = Hight(p->left);
+        y = Hight(p->right);
+        
+        if(x>y)
+            return x+1;
+        else
+            return y+1;
+    }
+    return 0;
 }
 
 int main()
