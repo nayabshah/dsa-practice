@@ -60,7 +60,7 @@ Node *Search(int key){
         else
             t = t->right;
     }
-    return NULL;
+    return nullptr;
 }
 
 int main() {
