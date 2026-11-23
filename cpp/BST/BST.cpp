@@ -50,6 +50,19 @@ void Inorder(Node *p){
         
 }
 
+Node *Search(int key){
+    Node *t = root;
+    while(t){
+        if(key ==t ->data)
+            return t;
+        else if(key <t->data)
+            t=t->left;
+        else
+            t = t->right;
+    }
+    return NULL;
+}
+
 int main() {
     // Write C++ code here
     Insert(10);
